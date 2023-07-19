@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ejercicio2_4.Views.SignatureGallery"
+             xmlns:Convertidor="clr-namespace:Ejercicio2_4.Converter"
+             Title="Galería de Firmas">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Convertidor:ByteArrayToImage x:Key="ByteToImage" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView x:Name="clvFirmas">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItemView WidthRequest="50" 
+                                                   x:Name="swpDelete" 
+                                                   Invoked="swpDelete_Invoked" 
+                                                   CommandParameter="{Binding .}">
+                                        <Image Source="delete_trash_icon.png" Margin="5,0"/>
+                                    </SwipeItemView>                                    
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <Frame x:Name="frmCard"
+                                   CornerRadius="10"                                                                    
+                                   Margin="10,5"  
+                                   Padding="8"                                   
+                                   HorizontalOptions="Fill">
+                                <StackLayout>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Grid.RowSpan="3" Source="{Binding sign, Converter={StaticResource ByteToImage}}"/>
+
+                                        <StackLayout Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                                            <Label Text="Nombre:" 
+                                                   FontSize="Subtitle"
+                                                   FontAttributes="Bold"/>
+                                            <Label FontSize="Body"
+                                                   Text="{Binding name}"/>
+                                        </StackLayout>
+
+                                        <StackLayout Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                                            <Label Text="Descripción:" 
+                                                   FontSize="Subtitle"
+                                                   FontAttributes="Bold"/>
+                                            <Label FontSize="Body"
+                                                   Text="{Binding descrip}"/>
+                                        </StackLayout>
+                                        
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
